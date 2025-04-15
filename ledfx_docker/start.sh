@@ -1,9 +1,9 @@
 #!/bin/bash
-${PULSEAUDIOCLIENT:-"0"}
+PULSEAUDIOCLIENT="${PULSEAUDIOCLIENT:-0}"
 set -eu
 
 if [ "$PULSEAUDIOCLIENT"!="0" ]; then
-  echo "Running in Pulseaudio client mode. Please ensure default source is set correctly."
+  echo "Running in Pulseaudio client mode. Please ensure default audio source is set correctly. Monitor sources are usually the best option."
 else
   echo "Running in pulseaudio server mode. Cleaning up old PulseAudio files..."
   rm -rf "$HOME/.config/pulse/"* || echo "Failed to clean Pulseaudio files. Check permissions on mounted folder."
