@@ -6,7 +6,7 @@ services:
     network_mode: host
     command: ["--offline", "--clear-effects"] #optional command line arguments passed to LedFx
     #environment:
-    #  - PULSECLIENT=1 # Set to 1 to use the PulseAudio client mode Ensure correct default source is set in host pulseaudio Eg using pactl set-default-source
+    #  - PULSECLIENTMODE=1 # Set to anything to use the PulseAudio client mode Ensure correct default source is set in host pulseaudio Eg using pactl set-default-source
     volumes:
       - /path/to/ledfx-config:/home/ledfx/ledfx-config:rw # Path to LedFx configuration files
       - /path/to/ledfx/pulse:/home/ledfx/.config/pulse:rw # Necessary when running in pulseaudio server mode. /path/to/ledfx/pulse should be with read write access for UID:GID=1000:1000
