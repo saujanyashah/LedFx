@@ -171,6 +171,53 @@ jobs:
           name: LedFx-${{ steps.ledfx-version.outputs.ledfx-version }}-osx-arm64
           path: ${{ github.workspace }}/dist/*
 
+  docker-build:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Pass Is_Release variable to Dockerfile Args
+      run: |
+        if [[ "${{ startsWith(github.ref, 'refs/tags/') }}" == "true" ]]; then
+          echo "IS_RELEASE=true" >> "$GITHUB_ENV"
+        else
+          echo "IS_RELEASE=false" >> "$GITHUB_ENV"
+        fi
+    - name: Download LedFx Version
+      uses: actions/download-artifact@v4
+      with:
+        name: ledfx_version.txt
+    - name: Get LedFx Version
+      id: ledfx-version
+      run: |
+        echo ledfx-version=$(cat ledfx_version.txt) >> $GITHUB_OUTPUT  
+    - name: Set up QEMU (emulation)
+      uses: docker/setup-qemu-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push for amd64 + arm64
+      uses: docker/build-push-action@v5
+      with:
+        context: ./
+        file: ./ledfx_docker/Dockerfile
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: |
+          ghcr.io/${{ github.repository_owner }}/ledfx:latest
+          ghcr.io/${{ github.repository_owner }}/ledfx:${{ steps.ledfx-version.outputs.ledfx-version }}
+        cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/ledfx:cacherelease
+        cache-to: type=registry,ref=ghcr.io/${{ github.repository_owner }}/ledfx:cacherelease,mode=max
+        build-args: |
+          GITHUB_SHA=${{ github.sha }}
+          IS_RELEASE=${{ env.IS_RELEASE }}
+
   run-ledfx-windows:
     name: Test LedFx (Windows)
     runs-on: windows-latest
