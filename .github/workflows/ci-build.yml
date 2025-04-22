@@ -215,7 +215,7 @@ jobs:
           IS_RELEASE=${{ env.IS_RELEASE }}
     - name: Run ci-smoke-test
       run: |
-        docker run --rm ghcr.io/${{ github.repository_owner }}/ledfx:testing --ci-smoke-test -vv -c debug_config --offline
+        docker run --rm ghcr.io/${{ github.repository_owner }}/ledfx:testing --ci-smoke-test -vv -c /github/workspace/debug_config --offline
     - name: Attach LedFx test log
       uses: actions/upload-artifact@v4
       if: always()
