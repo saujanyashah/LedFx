@@ -214,13 +214,14 @@ jobs:
           push: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'pull_request' }}
           load: true
           labels: |
-            org.opencontainers.image.title="LedFx" \
-            org.opencontainers.image.description="LedFx makes your LEDs dance to music." \
-            org.opencontainers.image.url=https://github.com/$GITHUB_REPOSITORY \
-            org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_NUMBER \
-            org.opencontainers.image.revision=$GITHUB_SHA \
-            org.opencontainers.image.version=$GITHUB_REF_NAME \
-            org.opencontainers.image.licenses="GPL-3" \
+            org.opencontainers.image.title=LedFx
+            org.opencontainers.image.description=LedFx makes your LEDs dance to music.
+            org.opencontainers.image.url=https://github.com/${{ GITHUB.REPOSITORY }}
+            org.opencontainers.image.source=https://github.com/${{ GITHUB.REPOSITORY }}/actions/runs/${{ GITHUB.RUN_NUMBER }}
+            org.opencontainers.image.created=${{ github.event.head_commit.timestamp }}
+            org.opencontainers.image.revision=${{ GITHUB.SHA }}
+            org.opencontainers.image.version=${{ GITHUB.REF_NAME }}
+            org.opencontainers.image.licenses=GPL-3
           tags: |
             ${{ env.GHCR_IMAGE }}:edge-${{ matrix.ARCH }}
             ${{ env.GHCR_IMAGE }}:edge-${{ matrix.ARCH }}-${{ github.sha }}
@@ -313,13 +314,14 @@ jobs:
         if: github.ref == format('refs/tags/v{0}', steps.ledfx-version.outputs.ledfx-version)
         run: |
           docker buildx imagetools create \
-            --annotation org.opencontainers.image.title="LedFx" \
-            --annotation org.opencontainers.image.description="LedFx makes your LEDs dance to music." \
-            --annotation org.opencontainers.image.url=https://github.com/$GITHUB_REPOSITORY \
-            --annotation org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_NUMBER \
-            --annotation org.opencontainers.image.revision=$GITHUB_SHA \
-            --annotation org.opencontainers.image.version=$GITHUB_REF_NAME \
-            --annotation org.opencontainers.image.licenses="GPL-3" \
+            --annotation "org.opencontainers.image.title=LedFx" \
+            --annotation "org.opencontainers.image.description=LedFx makes your LEDs dance to music." \
+            --annotation "org.opencontainers.image.url=https://github.com/${{ GITHUB.REPOSITORY }}" \
+            --annotation "org.opencontainers.image.source=https://github.com/${{ GITHUB.REPOSITORY }}/actions/runs/${{ GITHUB.RUN_NUMBER }}" \
+            --annotation "org.opencontainers.image.created=${{ github.event.head_commit.timestamp }}" \
+            --annotation "org.opencontainers.image.revision=${{ GITHUB.SHA }}" \
+            --annotation "org.opencontainers.image.version=${{ GITHUB.REF_NAME }}" \
+            --annotation "org.opencontainers.image.licenses=GPL-3" \
             -t ${{ env.GHCR_IMAGE }}:latest \
             -t ${{ env.GHCR_IMAGE }}:${{ steps.ledfx-version.outputs.ledfx-version }} \
             -t ${{ env.GHCR_IMAGE }}:${{ github.sha }} \
