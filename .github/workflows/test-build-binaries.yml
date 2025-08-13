@@ -217,7 +217,7 @@ jobs:
             org.opencontainers.image.title=LedFx
             org.opencontainers.image.description=LedFx makes your LEDs dance to music.
             org.opencontainers.image.url=https://github.com/${{ GITHUB.REPOSITORY }}
-            org.opencontainers.image.source=https://github.com/${{ GITHUB.REPOSITORY }}/actions/runs/${{ GITHUB.RUN_NUMBER }}
+            org.opencontainers.image.source=https://github.com/${{ GITHUB.REPOSITORY }}/actions/runs/${{ GITHUB.RUN_ID }}
             org.opencontainers.image.created=${{ github.event.head_commit.timestamp }}
             org.opencontainers.image.revision=${{ GITHUB.SHA }}
             org.opencontainers.image.version=${{ GITHUB.REF_NAME }}
@@ -317,7 +317,7 @@ jobs:
             --annotation "org.opencontainers.image.title=LedFx" \
             --annotation "org.opencontainers.image.description=LedFx makes your LEDs dance to music." \
             --annotation "org.opencontainers.image.url=https://github.com/${{ GITHUB.REPOSITORY }}" \
-            --annotation "org.opencontainers.image.source=https://github.com/${{ GITHUB.REPOSITORY }}/actions/runs/${{ GITHUB.RUN_NUMBER }}" \
+            --annotation "org.opencontainers.image.source=https://github.com/${{ GITHUB.REPOSITORY }}/actions/runs/${{ GITHUB.run_id }}" \
             --annotation "org.opencontainers.image.created=${{ github.event.head_commit.timestamp }}" \
             --annotation "org.opencontainers.image.revision=${{ GITHUB.SHA }}" \
             --annotation "org.opencontainers.image.version=${{ GITHUB.REF_NAME }}" \
