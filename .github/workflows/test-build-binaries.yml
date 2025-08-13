@@ -216,10 +216,10 @@ jobs:
           labels: |
             org.opencontainers.image.title="LedFx" \
             org.opencontainers.image.description="LedFx makes your LEDs dance to music." \
-            org.opencontainers.image.url="https://github.com/${{ GITHUB_REPOSITORY }}" \
-            org.opencontainers.image.source="https://github.com/${{ GITHUB_REPOSITORY }}/actions/runs/${{ GITHUB_RUN_NUMBER }}" \
-            org.opencontainers.image.revision="${{ GITHUB_SHA }}" \
-            org.opencontainers.image.version="${{ GITHUB_REF_NAME }}" \
+            org.opencontainers.image.url="https://github.com/$GITHUB_REPOSITORY" \
+            org.opencontainers.image.source="https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_NUMBER" \
+            org.opencontainers.image.revision="$GITHUB_SHA" \
+            org.opencontainers.image.version="$GITHUB_REF_NAME" \
             org.opencontainers.image.licenses="GPL-3" \
           tags: |
             ${{ env.GHCR_IMAGE }}:edge-${{ matrix.ARCH }}
