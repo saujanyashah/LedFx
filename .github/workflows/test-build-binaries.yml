@@ -214,14 +214,14 @@ jobs:
           push: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'pull_request' }}
           load: true
           annotations: |
-            index,manifest:org.opencontainers.image.title=LedFx
-            index,manifest:org.opencontainers.image.description=LedFx makes your LEDs dance to music.
-            index,manifest:org.opencontainers.image.url=https://github.com/${{ GITHUB.REPOSITORY }}
-            index,manifest:org.opencontainers.image.source=https://github.com/${{ GITHUB.REPOSITORY }}/actions/runs/${{ GITHUB.RUN_ID }}
-            index,manifest:org.opencontainers.image.created=${{ github.event.head_commit.timestamp }}
-            index,manifest:org.opencontainers.image.revision=${{ GITHUB.SHA }}
-            index,manifest:org.opencontainers.image.version=${{ GITHUB.REF_NAME }}
-            index,manifest:org.opencontainers.image.licenses=GPL-3
+            index:org.opencontainers.image.title=LedFx
+            index:org.opencontainers.image.description=LedFx makes your LEDs dance to music.
+            index:org.opencontainers.image.url=https://github.com/${{ GITHUB.REPOSITORY }}
+            index:org.opencontainers.image.source=https://github.com/${{ GITHUB.REPOSITORY }}/actions/runs/${{ GITHUB.RUN_ID }}
+            index:org.opencontainers.image.created=${{ github.event.head_commit.timestamp }}
+            index:org.opencontainers.image.revision=${{ GITHUB.SHA }}
+            index:org.opencontainers.image.version=${{ GITHUB.REF_NAME }}
+            index:org.opencontainers.image.licenses=GPL-3
           tags: |
             ${{ env.GHCR_IMAGE }}:edge-${{ matrix.ARCH }}
             ${{ env.GHCR_IMAGE }}:edge-${{ matrix.ARCH }}-${{ github.sha }}
